@@ -37,11 +37,64 @@ export class AppComponent {
   }
 
   onFunctionClick(val: string){
-    if(this.funcT != 'NoFunction'){
+
+    // call the clear all method when click C button
+    if(val == 'c'){
+      this.clearAll();
+    }
+    else if(this.funcT == 'NoFunction'){
       this.firstNumber = this.calValue;
       this.calValue = 0;
       this.calNumber = 'noValue';
       this.funcT = val;
+    } else if (this.funcT != 'NoFunction'){
+      this.secondNumber = this.calValue;
+      // calculation
+      this.valueCalculate(val);
     }
+  }
+
+  valueCalculate(val: string){
+    if(this.funcT == '+'){
+      const Total = this.firstNumber + this.secondNumber;
+      this.totalAssignValues(Total, val);
+      
+    } else if(this.funcT == '-'){
+      const Total = this.firstNumber - this.secondNumber;
+      this.totalAssignValues(Total, val);
+    } else if(this.funcT == '*'){
+      const Total = this.firstNumber * this.secondNumber;
+      this.totalAssignValues(Total, val);
+    } else if(this.funcT == '/'){
+      const Total = this.firstNumber / this.secondNumber;
+      this.totalAssignValues(Total, val);
+    } else if(this.funcT == '%'){
+      const Total = this.firstNumber % this.secondNumber;
+      this.totalAssignValues(Total, val);
+    } 
+  }
+
+  totalAssignValues(Total: number, val: string){
+    this.calValue = Total;
+    this.firstNumber = Total; 
+    this.secondNumber= 0; 
+    this.calNumber = 'noValue';
+    this.funcT = val;
+    if(this.funcT == '='){this.onEqualPress();}
+  }
+
+  onEqualPress(){
+    this.firstNumber = 0;
+    this.secondNumber = 0; 
+    this.funcT = "NoFunction";
+    this.calNumber = 'noValue';
+  }
+
+  clearAll(){
+    this.firstNumber = 0;
+    this.secondNumber = 0;
+    this.calValue = 0; 
+    this.funcT = "NoFunction";
+    this.calNumber = 'noValue';
   }
 }
